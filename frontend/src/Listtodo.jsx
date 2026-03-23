@@ -7,7 +7,7 @@ function App() {
     const [item, setItem] = useState([]);
 
     useEffect(() => {
-        axios.get("http://127.0.0.1:8000/api/api/todo/")
+        axios.get("https://fullstack-4jgu.onrender.com/api/api/todo/")
              .then(res => setItem(res.data))
              .catch(err => console.log(err));
     }, []);
@@ -30,7 +30,7 @@ function App() {
         document.body.appendChild(overlay);
 
         document.getElementById('confirmDelete').onclick = () => {
-            axios.delete(`http://127.0.0.1:8000/api/api/todo/${id}/`)
+            axios.delete(`https://fullstack-4jgu.onrender.com/api/api/todo/${id}/`)
                 .then(() => {
                     overlay.remove();
                     // Alerte de succès stylisée via Tailwind CSS
