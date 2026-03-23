@@ -22,7 +22,7 @@ useEffect(() => {
 
     const handleupdate =(e)=>{
         e.preventDefault();
-        axios.put(`${API_BASE_URL}/${id}/`,{
+        axios.put(`${API_BASE_URL}${id}/`,{
             nom_todo : nom_td,
             description : desc
      }).then(()=>{
