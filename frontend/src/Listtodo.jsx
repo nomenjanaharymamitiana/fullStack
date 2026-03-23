@@ -155,7 +155,7 @@ const supprimerTodo = (id) => {
                             </span>
                         </button>
                         <Link 
-                            to={`/modifier_todo/${todo.id_todo}`} 
+                            to={`${API_BASE_URL}/${todo.id_todo}`} 
                             style={{
                                 color: '#2196f3',
                                 textDecoration: 'none',

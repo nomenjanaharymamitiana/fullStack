@@ -8,17 +8,17 @@ function Modifier_todo(){
     const navigate = useNavigate();
     const [nom_td, setNom_td]= useState("")
     const [desc,setDesc]=useState("")
-
+    const API_BASE_URL = "https://fullstack-4jgu.onrender.com/api/api/todo/";
     //charger le donne actuelle 
     useEffect(() => {
-        axios.get(`http://127.0.0.1:8000/api/api/todo/${id}/`).then(res => {
+        axios.get(`${API_BASE_URL}/${id}/`).then(res => {
             setNom_td(res.data.nom_todo);
             setDesc(res.data.description);
         }).catch(error => console.error("Erreur lors de la recuperation du donne :", error));
     }, [id]);
     const handleupdate =(e)=>{
         e.preventDefault();
-        axios.put(`http://127.0.0.1:8000/api/api/todo/${id}/`,{
+        axios.put(`${API_BASE_URL}/${id}/`,{
             nom_todo : nom_td,
             description : desc
      }).then(()=>{
