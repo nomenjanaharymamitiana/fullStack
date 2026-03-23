@@ -5,9 +5,10 @@ import axios from "axios";
 
 function App() {
     const [item, setItem] = useState([]);
+    const API_BASE_URL = "https://fullstack-4jgu.onrender.com/api/api/todo/";
 
     useEffect(() => {
-        axios.get("https://fullstack-4jgu.onrender.com/api/api/todo/")
+        axios.get(API_BASE_URL)
              .then(res => setItem(res.data))
              .catch(err => console.log(err));
     }, []);
@@ -30,7 +31,7 @@ function App() {
         document.body.appendChild(overlay);
 
         document.getElementById('confirmDelete').onclick = () => {
-            axios.delete(`https://fullstack-4jgu.onrender.com/api/api/todo/${id}/`)
+            axios.delete(`${API_BASE_URL}${id}`)
                 .then(() => {
                     overlay.remove();
                     // Alerte de succès stylisée via Tailwind CSS

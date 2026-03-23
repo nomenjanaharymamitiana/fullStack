@@ -57,12 +57,12 @@ ROOT_URLCONF = 'listtodo.urls'
 WSGI_APPLICATION = 'listtodo.wsgi.application'
 
 # Configuration de la DATABASE (PostgreSQL sur Render, SQLite en local)
+
 DATABASES = {
-    'default': dj_database_url.config(
-        default=f"sqlite:///{BASE_DIR / 'db.sqlite3'}",
-        conn_max_age=600
-    )
+    'default': dj_database_url.config(default=os.environ.get('DATABASE_URL'))
 }
+
+
 
 # Configuration CORS
 CORS_ALLOW_ALL_ORIGINS = True # Pour le test, on autorise tout
