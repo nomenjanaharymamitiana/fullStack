@@ -14,47 +14,29 @@ function App() {
     }, []);
    // à mettre en haut du fichier (uniquement la première fois)
 
-    const supprimerTodo = (id) => {
-        // Affichage d'une boîte de dialogue confirm personnalisée en utilisant Tailwind CSS
-        const overlay = document.createElement('div');
-        overlay.className = "fixed inset-0 bg-black bg-opacity-40 z-40 flex justify-center items-center";
-        const modal = document.createElement('div');
-        modal.className = "bg-white rounded-lg shadow-xl p-8 flex flex-col items-center";
-        modal.innerHTML = `
-            <span class="text-lg font-semibold mb-4 text-gray-800">Voulez-vous supprimer cette tâche ?</span>
-            <div class="flex space-x-4">
-                <button id="confirmDelete" class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded focus:outline-none">Supprimer</button>
-                <button id="cancelDelete" class="bg-gray-200 hover:bg-gray-300 text-gray-700 px-4 py-2 rounded focus:outline-none">Annuler</button>
-            </div>
-        `;
-        overlay.appendChild(modal);
-        document.body.appendChild(overlay);
+const supprimerTodo = (id) => {
+    // Test simple avec la boîte de dialogue native du navigateur
+    if (window.confirm("Voulez-vous vraiment supprimer cette tâche ?")) {
+        
+        // On s'assure que l'URL est : https://.../api/todo/ID/
+        axios.delete(`${API_BASE_URL}${id}/`) 
+            .then(() => {
+                // Alerte de succès
+                const alertDiv = document.createElement('div');
+                alertDiv.className = "fixed top-4 left-1/2 transform -translate-x-1/2 bg-green-500 text-white px-6 py-3 rounded shadow-lg z-50";
+                alertDiv.innerText = "Tâche supprimée !";
+                document.body.appendChild(alertDiv);
+                setTimeout(() => alertDiv.remove(), 2000);
 
-        document.getElementById('confirmDelete').onclick = () => {
-            axios.delete(`${API_BASE_URL}${id}`)
-                .then(() => {
-                    overlay.remove();
-                    // Alerte de succès stylisée via Tailwind CSS
-                    const alertDiv = document.createElement('div');
-                    alertDiv.className = "fixed top-4 left-1/2 transform -translate-x-1/2 bg-gradient-to-r from-green-400 to-blue-600 text-white px-6 py-3 rounded shadow-lg z-50";
-                    alertDiv.innerText = "Tâche supprimée avec succès !";
-                    document.body.appendChild(alertDiv);
-
-                    setTimeout(() => {
-                        alertDiv.remove();
-                    }, 2000);
-
-                    setItem(item.filter(todo => todo.id_todo !== id));
-                })
-                .catch(err =>
-                    console.error("Erreur lors de la suppression ", err)
-                );
-        };
-
-        document.getElementById('cancelDelete').onclick = () => {
-            overlay.remove();
-        };
+                // Mise à jour de l'état
+                setItem(item.filter(todo => todo.id_todo !== id));
+            })
+            .catch(err => {
+                console.error("Détails de l'erreur :", err.response);
+                alert("Erreur lors de la suppression. Vérifiez la console.");
+            });
     }
+}
 
     return (
         <div
